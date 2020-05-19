@@ -6,7 +6,7 @@ import PostCard from '../components/post-card.js'
 
 const FETCH_POSTS = gql`
   query {
-    getPosts {
+    posts {
       id body createdAt username likesCount
       likes {
         username
@@ -26,7 +26,7 @@ const Home = () => {
         <h1>Recent Posts</h1>
       </Grid.Row>
       <Grid.Row>
-        {loading ? <h1>Loading posts...</h1> : data.getPosts && data.getPosts.map(post => 
+        {loading ? <h1>Loading posts...</h1> : data.posts && data.posts.map(post => 
           <Grid.Column key={post.id} style={{ marginBottom: 10 }}>
             <PostCard post={post} />
           </Grid.Column>

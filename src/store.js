@@ -1,40 +1,42 @@
 import React from 'react'
+import jwtDecode from 'jwt-decode'
 
-export const AuthContext = React.createContext({
+import authReducer from './reducer'
+
+export const StoreContext = React.createContext({
   user: null,
   login: (data) => {},
   logout: () => {}
 })
 
-const authReducer = (state, action) => {
-  switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        user: action.payload
-      }
-    case 'LOGOUT':
-      return {
-        ...state,
-        user: null
-      }
-    default:
-      return state
+const initialState = {
+  user: null
+}
+
+if (localStorage.getItem('jwtToken')) {
+  const token = jwtDecode(localStorage.getItem('jwtToken'))
+  if (token.exp * 1000 < Date.now()) {
+    localStorage.removeItem('jwtToken')
+  } else {
+    console.log('token == ', token)
+    initialState.user = token
   }
 }
 
 const Store = props => {
-  const [state, dispatch] = React.useReducer(authReducer, { user: null })
+  const [state, dispatch] = React.useReducer(authReducer, initialState)
   const login = userData => {
+    localStorage.setItem('jwtToken', userData.token)
     dispatch({type: 'LOGIN', payload: userData})
   }
   const logout = () => {
+    localStorage.removeItem('jwtToken')
     dispatch({type: 'LOGOUT'})
   }
   return (
-    <AuthContext.Provider value={{user: state.user, login, logout}}>
+    <StoreContext.Provider value={{user: state.user, login, logout}}>
       {props.children}
-    </AuthContext.Provider>
+    </StoreContext.Provider>
   )
 }
 
