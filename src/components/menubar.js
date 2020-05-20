@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { StoreContext } from '../store'
 
 const Menubar = () => {
-  const { user, logout } = React.useContext(StoreContext)
+  const { state, dispatch } = React.useContext(StoreContext)
   const [activeItem, setActiveItem] = React.useState('home')
   const handleItemClick = (e, { name }) => setActiveItem(name)
 
@@ -18,11 +18,11 @@ const Menubar = () => {
         as={Link}
         to="/"
       />
-      {user ? 
+      {state.user ? 
         <Menu.Menu position='right'>
           <Menu.Item
             name='logout'
-            onClick={logout}
+            onClick={() => dispatch({type: 'LOGOUT'})}
           />
         </Menu.Menu>
       : <Menu.Menu position='right'>

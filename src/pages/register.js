@@ -25,7 +25,7 @@ const REGISTER_USER = gql`
 `
 
 const Register = props => {
-  const context = React.useContext(StoreContext)
+  const { dispatch } = React.useContext(StoreContext)
   const [values, setValues] = React.useState({
     username: '',
     email: '',
@@ -40,8 +40,7 @@ const Register = props => {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(cache, result) {
       const userData = result.data.register
-      console.log('userdata == ', userData)
-      context.login(userData)
+      dispatch({type: 'LOGIN', payload: userData})
       props.history.push('/')
     }, 
     onError(err) {

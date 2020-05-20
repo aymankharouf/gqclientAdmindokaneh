@@ -19,7 +19,7 @@ const LOGIN = gql`
 `
 
 const Login = props => {
-  const context = React.useContext(StoreContext)
+  const { dispatch } = React.useContext(StoreContext)
   const [values, setValues] = React.useState({
     username: '',
     password: ''
@@ -32,8 +32,7 @@ const Login = props => {
   const [login, { loading }] = useMutation(LOGIN, {
     update(cache, result) {
       const userData = result.data.login
-      console.log('userdata == ', userData)
-      context.login(userData)
+      dispatch({type: 'LOGIN', payload: userData})
       props.history.push('/')
     }, 
     onError(err) {

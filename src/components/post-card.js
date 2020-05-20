@@ -4,7 +4,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 const PostCard = props => {
-  const { id, body, createdAt, username, likesCount, likes } = props.post
+  const { id, body, createdAt, username, likesCount } = props.post
   const likePost = () => {
     
   }
