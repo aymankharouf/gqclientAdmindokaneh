@@ -5,11 +5,11 @@ import { Grid, Transition } from 'semantic-ui-react'
 import PostCard from '../components/post-card'
 import PostForm from '../components/post-form'
 import { AuthContext } from '../auth-provider'
-import { FETCH_POSTS } from '../graphql'
+import { GET_POSTS } from '../graphql'
 
 const Home = () => {
   const { state } = React.useContext(AuthContext)
-  const { loading, data } = useQuery(FETCH_POSTS)
+  const { loading, data } = useQuery(GET_POSTS)
   return (
     <Grid columns={3}>
       <Grid.Row>

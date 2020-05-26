@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const FETCH_POSTS = gql`
+export const GET_POSTS = gql`
   query {
     posts {
       id body createdAt username likesCount
@@ -25,5 +25,11 @@ export const CREATE_POST = gql`
         id body username createdAt
       }
     }
+  }
+`
+
+export const DELETE_POST = gql`
+  mutation deletePost($id: ID!) {
+    deletePost(id: $id) 
   }
 `

@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { useMutation } from '@apollo/react-hooks'
 
-import { FETCH_POSTS, CREATE_POST } from '../graphql'
+import { GET_POSTS, CREATE_POST } from '../graphql'
 
 const PostForm = () => {
   const [body, setBody] = React.useState('')
@@ -14,10 +14,10 @@ const PostForm = () => {
     update: (cache, result) => {
       setBody('')
       const data = cache.readQuery({
-        query: FETCH_POSTS
+        query: GET_POSTS
       })
       const newData = {...data, posts: [result.data.createPost, ...data.posts]}
-      cache.writeQuery({query: FETCH_POSTS, data: newData})
+      cache.writeQuery({query: GET_POSTS, data: newData})
     },
     onError: (err) => {
       setError(err.graphQLErrors[0].message)
