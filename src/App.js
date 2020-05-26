@@ -8,11 +8,11 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
 import Menubar from './components/menubar'
-import Store from './store'
+import AuthProvider from './auth-provider'
 
 const App = () => {
   return (
-    <Store>
+    <AuthProvider>
       <BrowserRouter>
         <Container>
           <Menubar />
@@ -21,7 +21,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
         </Container>
       </BrowserRouter>
-    </Store>
+    </AuthProvider>
   );
 }
 

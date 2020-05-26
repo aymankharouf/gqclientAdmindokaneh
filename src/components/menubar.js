@@ -2,10 +2,10 @@ import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { StoreContext } from '../store'
+import { AuthContext } from '../auth-provider'
 
 const Menubar = () => {
-  const { state, dispatch } = React.useContext(StoreContext)
+  const { state, dispatch } = React.useContext(AuthContext)
   const [activeItem, setActiveItem] = React.useState('home')
   const handleItemClick = (e, { name }) => setActiveItem(name)
 

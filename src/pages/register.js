@@ -3,7 +3,7 @@ import { Form, Button } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 
-import { StoreContext } from '../store'
+import { AuthContext } from '../auth-provider'
 
 const REGISTER_USER = gql`
   mutation register(
@@ -25,7 +25,7 @@ const REGISTER_USER = gql`
 `
 
 const Register = props => {
-  const { dispatch } = React.useContext(StoreContext)
+  const { dispatch } = React.useContext(AuthContext)
   const [values, setValues] = React.useState({
     username: '',
     email: '',
