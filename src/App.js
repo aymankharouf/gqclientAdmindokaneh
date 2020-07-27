@@ -1,28 +1,26 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
-import 'semantic-ui-css/semantic.min.css'
-import './App.css';
+import { App, Panel, View } from 'framework7-react'
+import routes from './routes'
 
-import { Container } from 'semantic-ui-react'
-import Home from './pages/home'
-import Login from './pages/login'
-import Register from './pages/register'
-import Menubar from './components/menubar'
 import AuthProvider from './auth-provider'
 
-const App = () => {
+const app = () => {
+  const f7params = {
+    id: 'io.framework7.dokaneh', 
+    name: 'دكانة نت', 
+    theme: 'ios',
+    routes,
+  }
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Container>
-          <Menubar />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-        </Container>
-      </BrowserRouter>
+     <App params={f7params}>
+        <Panel right reveal themeDark>
+          <View url="/panel/"/>
+        </Panel>
+        <View id="main-view" url="/" main className="safe-areas"/>
+      </App>
     </AuthProvider>
   );
 }
 
-export default App;
+export default app;

@@ -1,35 +1,30 @@
 import gql from 'graphql-tag'
 
-export const GET_POSTS = gql`
+export const GET_NOTIFICATIONS = gql`
+  query notifications($toUser: ID!) {
+    notifications(toUser: $toUser) {
+      id title message status fromUser toUser
+    }
+  }
+`
+export const CREATE_NOTIFICATION = gql`
+  mutation createNotification($title: String!, $message: String!, $toUser: ID!) {
+    createNotification(title: $title, message: $message, toUser: $toUser) {
+      id title message status fromUser toUser
+    }
+  }
+`
+
+export const DELETE_NOTIFICATION = gql`
+  mutation deleteNotification($id: ID!) {
+    deleteNotification(id: $id) 
+  }
+`
+
+export const GET_CATEGORIES = gql`
   query {
-    posts {
-      id body createdAt username likesCount
-      likes {
-        username
-      }
-      comments {
-        id body username createdAt
-      }
+    categories {
+      id name ordering isLeaf parent
     }
-  }
-`
-
-export const CREATE_POST = gql`
-  mutation createPost($body: String!) {
-    createPost(body: $body) {
-      id body createdAt username likesCount
-      likes {
-        username
-      }
-      comments {
-        id body username createdAt
-      }
-    }
-  }
-`
-
-export const DELETE_POST = gql`
-  mutation deletePost($id: ID!) {
-    deletePost(id: $id) 
   }
 `
