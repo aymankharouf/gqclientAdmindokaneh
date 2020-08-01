@@ -6,18 +6,7 @@ export const setup = {
   profit: 0.05
 }
 
-export const randomColors = [
-  {id: 0, name: 'red'},
-  {id: 1, name: 'green'},
-  {id: 2, name: 'blue'},
-  {id: 3, name: 'pink'},
-  {id: 4, name: 'yellow'},
-  {id: 5, name: 'orange'},
-  {id: 6, name: 'purple'},
-  {id: 7, name: 'deeppurple'},
-  {id: 8, name: 'lightblue'},
-  {id: 9, name: 'teal'},
-]
+export const randomColors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark']
 
 export const sortByList = [
   {id: 'p', name: 'اﻷقل سعرا'},

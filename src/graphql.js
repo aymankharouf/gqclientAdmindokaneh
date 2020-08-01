@@ -24,7 +24,7 @@ export const DELETE_NOTIFICATION = gql`
 export const GET_CATEGORIES = gql`
   query {
     categories {
-      id name ordering isLeaf parent
+      id name ordering isLeaf parentId
     }
   }
 `

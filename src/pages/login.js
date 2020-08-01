@@ -1,8 +1,10 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import { f7, Page, Navbar, List, ListInput, Button, Link, Toolbar } from 'framework7-react'
 import { AuthContext } from '../auth-provider'
+import labels from '../data/labels'
+import { IonFooter, IonLoading, IonButton, IonToast, IonList, IonHeader, IonToolbar, IonTitle, IonPage, IonItem, IonLabel, IonInput, IonText, IonButtons, IonMenuButton } from '@ionic/react';
+import { useHistory } from "react-router-dom"
 
 const LOGIN = gql`
   mutation login(
@@ -21,18 +23,19 @@ const Login = props => {
   const { dispatch } = React.useContext(AuthContext)
   const [password, setPassword] = React.useState('')
   const [mobile, setMobile] = React.useState('')
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('')
-  const [mobileErrorMessage, setMobileErrorMessage] = React.useState('')
   const [error, setError] = React.useState('')
+  const [mobileError, setMobileError] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState('');
+  let history = useHistory();
   React.useEffect(() => {
     const patterns = {
       password: /^.{4}$/,
     }
     const validatePassword = (value) => {
       if (patterns.password.test(value)){
-        setPasswordErrorMessage('')
+        setPasswordError('')
       } else {
-        setPasswordErrorMessage(labels.invalidPassword)
+        setPasswordError(labels.invalidPassword)
       }
     }
     if (password) validatePassword(password)
@@ -43,79 +46,79 @@ const Login = props => {
     }
     const validateMobile = (value) => {
       if (patterns.mobile.test(value)){
-        setMobileErrorMessage('')
+        setMobileError('')
       } else {
-        setMobileErrorMessage(labels.invalidMobile)
+        setMobileError(labels.invalidMobile)
       }
     }
     if (mobile) validateMobile(mobile)
   }, [mobile])
-  React.useEffect(() => {
-    if (error) {
-      showError(error)
-      setError('')
-    }
-  }, [error])
-  React.useEffect(() => {
-    if (loading) {
-      f7.dialog.preloader(labels.inprocess)
-    } else {
-      f7.dialog.close()
-    }
-  }, [loading])
-
   
   const [login, { loading }] = useMutation(LOGIN, {
     update(cache, result) {
       const userData = result.data.login
       dispatch({type: 'LOGIN', payload: userData})
-      f7.views.current.router.back()
-      f7.panel.close('right') 
+      history.push('/tabs/schedule', {direction: 'none'});
     }, 
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.errors)
+      setError(err.graphQLErrors[0].extensions.errors)
     },
     variables: {mobile, password}
   })
   
-  const handleLogin = () => {
+  const handleLogin = async e => {
+    e.preventDefault();
     login()
   }
   return (
-    <Page>
-      <Navbar title={labels.login} backLink={labels.back} />
-      <List form>
-        <ListInput
-          label={labels.mobile}
-          type="number"
-          placeholder={labels.mobilePlaceholder}
-          name="mobile"
-          clearButton
-          errorMessage={mobileErrorMessage}
-          errorMessageForce
-          onChange={e => setMobile(e.target.value)}
-          onInputClear={() => setMobile('')}
-        />
-        <ListInput
-          label={labels.password}
-          type="number"
-          placeholder={labels.passwordPlaceholder}
-          name="password"
-          clearButton
-          errorMessage={passwordErrorMessage}
-          errorMessageForce
-          onChange={e => setPassword(e.target.value)}
-          onInputClear={() => setPassword('')}
-        />
-      </List>
-      {!mobile || !password || mobileErrorMessage || passwordErrorMessage ? '' : 
-        <Button text={labels.login} large onClick={() => handleLogin()} />
-      }
-      <Toolbar bottom>
-        <Link href="/register/n">{labels.newUser}</Link>
-        <Link href="/password-request/">{labels.forgetPassword}</Link>
-      </Toolbar>
-    </Page>
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>{labels.login}</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <form noValidate onSubmit={handleLogin}>
+        <IonList>
+          <IonItem>
+            <IonLabel position="stacked" color="primary">{labels.mobile}</IonLabel>
+            <IonInput name="mobile" type="text" required value={mobile} spellCheck={false} autocapitalize="off" onIonChange={e => setMobile(e.detail.value)}>
+            </IonInput>
+          </IonItem>
+          {mobileError && <IonText color="danger">
+            <p className="ion-padding-start" style={{fontSize: 12}}>
+              {mobileError}
+            </p>
+          </IonText>}
+
+          <IonItem>
+            <IonLabel position="stacked" color="primary">{labels.password}</IonLabel>
+            <IonInput name="password" type="password" value={password} onIonChange={e => setPassword(e.detail.value)}>
+            </IonInput>
+          </IonItem>
+          {passwordError && <IonText color="danger">
+            <p className="ion-padding-start" style={{fontSize: 12}}>
+              {passwordError}
+            </p>
+          </IonText>}
+        </IonList>
+        {mobile && password && !mobileError && !passwordError && <IonButton type="submit" expand="block" fill="clear">Login</IonButton>}
+      </form>
+      <IonFooter>
+        <IonToolbar>
+          <IonTitle>Footer</IonTitle>
+        </IonToolbar>
+      </IonFooter>
+      <IonToast
+        isOpen={!!error}
+        onDidDismiss={() => setError('')}
+        message={error}
+        duration={200}
+      />
+      <IonLoading isOpen={loading} />
+    </IonPage>
   )
 }
 

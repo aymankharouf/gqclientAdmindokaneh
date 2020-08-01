@@ -1,10 +1,10 @@
 import React from 'react'
-import { f7, Page, Navbar, NavLeft, NavTitle, Link, Toolbar, NavTitleLarge, Block } from 'framework7-react'
-import labels from '../data/labels'
 import MainCategories from './main-categories'
 import { GET_NOTIFICATIONS } from '../graphql'
 import { useQuery } from '@apollo/react-hooks'
 import { AuthContext } from '../auth-provider'
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading } from '@ionic/react';
+import labels from '../data/labels'
 
 const Home = () => {
   const { state } = React.useContext(AuthContext)
@@ -13,33 +13,25 @@ const Home = () => {
   React.useEffect(() => {
     setNotifications(() => data?.notifications.filter(n => n.status === 'n') || [])
   }, [data])
-  React.useEffect(() => {
-    if (loading) {
-      f7.dialog.preloader('')
-    } else {
-      f7.dialog.close()
-    }
-  }, [loading])
 
   return (
-    <Page>
-      <Navbar large>
-        <NavLeft>
-          <Link iconMaterial="menu" panelOpen="right" iconBadge={notifications.length} badgeColor="red" />
-        </NavLeft>
-        <NavTitle sliding>
-          <img src="/dokaneh_logo.png" alt="logo" className="logo" />
-          <span className='banner'>{labels.banner}</span>
-        </NavTitle>
-        <NavTitleLarge>
-          <img src="/dokaneh_logo.png" alt="logo" className="logo" />
-          <span className='banner'>{labels.banner}</span>
-        </NavTitleLarge>
-      </Navbar>
-      <Block>
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Home</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
         <MainCategories/>
-      </Block>
-    </Page>
+      </IonContent>
+      <IonLoading
+        isOpen={loading}
+        message={'Please wait...'}
+      />
+    </IonPage>
   )
 }
 
