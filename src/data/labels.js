@@ -172,6 +172,8 @@ const labels = {
   notifyFriends: 'ابلاغ الاصدقاء عن هذا العرض',
   noPurchase: 'عدم الشراء',
   closeExpired: 'صلاحية قصيرة',
+  userName: 'الاسم',
+  confirmPassword: 'تأكيد كلمة السر'
 }
 
 export default labels

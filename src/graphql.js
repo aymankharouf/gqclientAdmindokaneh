@@ -28,3 +28,35 @@ export const GET_CATEGORIES = gql`
     }
   }
 `
+
+export const LOGIN = gql`
+  mutation login(
+    $mobile: String!
+    $password: String!) {
+      login(
+          mobile: $mobile
+          password: $password
+      ) {
+        id username mobile createdAt token
+      }
+  }
+`
+
+export const REGISTER = gql`
+  mutation register(
+    $userName: String!
+    $mobile: String!
+    $password: String!
+    $confirmPassword: String!) {
+      register(
+        registerInput: {
+          userName: $userName
+          mobile: $mobile
+          password: $password
+          confirmPassword: $confirmPassword
+        }
+      ) {
+        id userName mobile createdAt token
+      }
+  }
+`
