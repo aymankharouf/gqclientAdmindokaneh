@@ -1,18 +1,8 @@
 import React from 'react'
 import MainCategories from './main-categories'
-import { GET_NOTIFICATIONS } from '../graphql'
-import { useQuery } from '@apollo/react-hooks'
-import { AuthContext } from '../auth-provider'
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading } from '@ionic/react';
-import labels from '../data/labels'
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 const Home = () => {
-  const { state } = React.useContext(AuthContext)
-  const { loading, data } = useQuery(GET_NOTIFICATIONS, {variables: {toUser: state.user}})
-  const [notifications, setNotifications] = React.useState([])
-  React.useEffect(() => {
-    setNotifications(() => data?.notifications.filter(n => n.status === 'n') || [])
-  }, [data])
 
   return (
     <IonPage>
@@ -27,10 +17,6 @@ const Home = () => {
       <IonContent>
         <MainCategories/>
       </IonContent>
-      <IonLoading
-        isOpen={loading}
-        message={'Please wait...'}
-      />
     </IonPage>
   )
 }

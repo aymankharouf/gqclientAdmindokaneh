@@ -37,7 +37,7 @@ export const LOGIN = gql`
           mobile: $mobile
           password: $password
       ) {
-        id username mobile createdAt token
+        id userName mobile createdAt token
       }
   }
 `

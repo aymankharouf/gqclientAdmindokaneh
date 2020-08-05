@@ -64,7 +64,7 @@ const Register = props => {
       history.push('/home', {direction: 'none'});
     }, 
     onError(err) {
-      console.log('err = ', err.graphQLErrors[0])
+      console.log('err = = ', err)
       setError(err.graphQLErrors[0])
     },
     variables: {userName, mobile, password, confirmPassword}
