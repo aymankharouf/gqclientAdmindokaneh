@@ -8,6 +8,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
 import Register from './pages/register';
+import Categories from './pages/categories';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -27,6 +28,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './css/app.css'
 
 const App = () => {
 
@@ -40,6 +42,7 @@ const App = () => {
               <Route path="/home" component={Home} exact />
               <Route path="/login" component={Login} exact />
               <Route path="/register" component={Register} exact />
+              <Route path="/categories/:id" component={Categories} exact />
               <Route path="/page/:name" component={Page} exact />
               <Redirect from="/" to="/home" exact />
             </IonRouterOutlet>

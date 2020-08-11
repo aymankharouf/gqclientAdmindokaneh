@@ -60,3 +60,18 @@ export const REGISTER = gql`
       }
   }
 `
+
+export const CREATE_CATEGORY = gql`
+  mutation createCategory(
+    $parentId: ID
+    $name: String!
+    $ordering: Int!) {
+      createCategory(
+        parentId: $parentId
+        name: $name
+        ordering: $ordering
+      ) {
+        id name ordering parentId isLeaf
+      }
+  }
+`

@@ -14,13 +14,26 @@ const Register = props => {
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
   const [mobile, setMobile] = React.useState('')
-  const [userName, setUserName] = React.useState('')
+  const [name, setName] = React.useState('')
   const [error, setError] = React.useState('')
   const [mobileError, setMobileError] = React.useState('');
-  const [userNameError, setUserNameError] = React.useState('');
+  const [nameError, setNameError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
   const [confirmPasswordError, setConfirmPasswordError] = React.useState('');
   let history = useHistory();
+  React.useEffect(() => {
+    const patterns = {
+      name: /^.{4,50}$/,
+    }
+    const validateName = value => {
+      if (patterns.name.test(value)){
+        setNameError('')
+      } else {
+        setNameError(labels.invalidName)
+      }
+    }  
+    if (name) validateName(name)
+  }, [name])  
   React.useEffect(() => {
     const patterns = {
       password: /^.{4}$/,
@@ -64,10 +77,9 @@ const Register = props => {
       history.push('/home', {direction: 'none'});
     }, 
     onError(err) {
-      console.log('err = = ', err)
       setError(err.graphQLErrors[0])
     },
-    variables: {userName, mobile, password, confirmPassword}
+    variables: {name, mobile, password, confirmPassword}
   })
   
   const handleRegister = event => {
@@ -88,13 +100,13 @@ const Register = props => {
         <form noValidate onSubmit={handleRegister} style={{padding: 10}}>
           <IonList>
             <IonItem>
-              <IonLabel position="floating" color="primary">{labels.userName}</IonLabel>
-              <IonInput name="mobile" type="text" required value={userName} spellCheck={false} autocapitalize="off" onIonChange={e => setUserName(e.detail.value)}>
+              <IonLabel position="floating" color="primary">{labels.name}</IonLabel>
+              <IonInput name="name" type="text" required value={name} spellCheck={false} autocapitalize="off" onIonChange={e => setName(e.detail.value)}>
               </IonInput>
             </IonItem>
-            {userNameError && <IonText color="danger">
+            {nameError && <IonText color="danger">
               <p className="ion-padding-start" style={{fontSize: 12}}>
-                {userNameError}
+                {nameError}
               </p>
             </IonText>}
             <IonItem>
@@ -129,7 +141,7 @@ const Register = props => {
               </p>
             </IonText>}
           </IonList>
-          {userName && mobile && password && confirmPassword && !userNameError && !mobileError && !passwordError && !confirmPasswordError && 
+          {name && mobile && password && confirmPassword && !nameError && !mobileError && !passwordError && !confirmPasswordError && 
             <IonButton type="submit" expand="block" fill="clear">{labels.register}</IonButton>
           }
         </form>

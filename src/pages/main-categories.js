@@ -18,9 +18,9 @@ const MainCategories = () => {
   return (
     <React.Fragment>
       <IonLoading isOpen={loading} />
-      <IonButton expand="block" color={randomColors[i++ % 10]} href={`/search/`}>{labels.allProducts}</IonButton>
+      <IonButton expand="block" color={randomColors[i++ % 10]} href={`/search/`} className="section">{labels.allProducts}</IonButton>
       {categories?.map(c => 
-        <IonButton key={c.id} expand="block" color={randomColors[i++ % 10]} href={`/categories/${c.id}`}>{c.name}</IonButton>
+        <IonButton key={c.id} expand="block" color={randomColors[i++ % 10]} href={`/categories/${c.id}`} className="section">{c.name}</IonButton>
       )}
     </React.Fragment>
   )
