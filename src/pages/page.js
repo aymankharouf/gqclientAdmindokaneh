@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router';
 import ExploreContainer from './explore-container';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';

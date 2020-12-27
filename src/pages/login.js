@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { AuthContext } from '../auth-provider'
 import labels from '../data/labels'
@@ -7,14 +7,14 @@ import { useHistory, Link } from "react-router-dom"
 import { LOGIN } from '../graphql'
 
 const Login = props => {
-  const { dispatch } = React.useContext(AuthContext)
-  const [password, setPassword] = React.useState('')
-  const [mobile, setMobile] = React.useState('')
-  const [error, setError] = React.useState('')
-  const [mobileError, setMobileError] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState('');
+  const { dispatch } = useContext(AuthContext)
+  const [password, setPassword] = useState('')
+  const [mobile, setMobile] = useState('')
+  const [error, setError] = useState('')
+  const [mobileError, setMobileError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   let history = useHistory();
-  React.useEffect(() => {
+  useEffect(() => {
     const patterns = {
       password: /^.{4}$/,
     }
@@ -27,7 +27,7 @@ const Login = props => {
     }
     if (password) validatePassword(password)
   }, [password])
-  React.useEffect(() => {
+  useEffect(() => {
     const patterns = {
       mobile: /^07[7-9][0-9]{7}$/
     }

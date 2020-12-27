@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { REGISTER } from '../graphql'
 import { useHistory } from "react-router-dom"
@@ -10,18 +10,18 @@ import { AuthContext } from '../auth-provider'
 
 
 const Register = props => {
-  const { dispatch } = React.useContext(AuthContext)
-  const [password, setPassword] = React.useState('')
-  const [confirmPassword, setConfirmPassword] = React.useState('')
-  const [mobile, setMobile] = React.useState('')
-  const [name, setName] = React.useState('')
-  const [error, setError] = React.useState('')
-  const [mobileError, setMobileError] = React.useState('');
-  const [nameError, setNameError] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = React.useState('');
+  const { dispatch } = useContext(AuthContext)
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [mobile, setMobile] = useState('')
+  const [name, setName] = useState('')
+  const [error, setError] = useState('')
+  const [mobileError, setMobileError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   let history = useHistory();
-  React.useEffect(() => {
+  useEffect(() => {
     const patterns = {
       name: /^.{4,50}$/,
     }
@@ -34,7 +34,7 @@ const Register = props => {
     }  
     if (name) validateName(name)
   }, [name])  
-  React.useEffect(() => {
+  useEffect(() => {
     const patterns = {
       password: /^.{4}$/,
     }
@@ -47,7 +47,7 @@ const Register = props => {
     }
     if (password) validatePassword(password)
   }, [password])
-  React.useEffect(() => {
+  useEffect(() => {
     const validateConfirmPassword = (value1, value2) => {
       if (value1 === value2){
         setConfirmPasswordError('')
@@ -57,7 +57,7 @@ const Register = props => {
     }
     if (password && confirmPassword) validateConfirmPassword(password, confirmPassword)
   }, [password, confirmPassword])
-  React.useEffect(() => {
+  useEffect(() => {
     const patterns = {
       mobile: /^07[7-9][0-9]{7}$/
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { f7, Page, Navbar, List, ListItem } from 'framework7-react'
 import labels from '../data/labels'
 import { AuthContext } from '../auth-provider'
@@ -6,13 +6,13 @@ import { GET_NOTIFICATIONS } from '../graphql'
 import { useQuery } from '@apollo/react-hooks'
 
 const Panel = () => {
-  const { state, dispatch } = React.useContext(AuthContext)
+  const { state, dispatch } = useContext(AuthContext)
   const { loading, data } = useQuery(GET_NOTIFICATIONS, {variables: {toUser: state.user}})
-  const [notifications, setNotifications] = React.useState([])
-  React.useEffect(() => {
+  const [notifications, setNotifications] = useState([])
+  useEffect(() => {
     setNotifications(() => data?.notifications.filter(n => n.status === 'n') || [])
   }, [data])
-  React.useEffect(() => {
+  useEffect(() => {
     if (loading) {
       f7.dialog.preloader('')
     } else {

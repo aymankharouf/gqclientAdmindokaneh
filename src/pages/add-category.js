@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, } from 'react'
 import { IonContent, IonFooter, IonLoading, IonButton, IonToast, IonList, IonHeader, IonToolbar, IonTitle, IonPage, IonItem, IonLabel, IonInput, IonText, IonButtons, IonMenuButton } from '@ionic/react';
 import labels from '../data/labels'
 import { useHistory } from "react-router-dom"
@@ -7,9 +7,9 @@ import { useMutation } from '@apollo/react-hooks'
 
 
 const AddCategory = props => {
-  const [error, setError] = React.useState('')
-  const [name, setName] = React.useState('')
-  const [ordering, setOrdering] = React.useState('')
+  const [error, setError] = useState('')
+  const [name, setName] = useState('')
+  const [ordering, setOrdering] = useState('')
   let history = useHistory()
   const [createCategory, { loading }] = useMutation(CREATE_CATEGORY, {
     update(cache, result) {

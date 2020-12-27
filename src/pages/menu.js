@@ -1,3 +1,6 @@
+import { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import {
   IonContent,
   IonIcon,
@@ -10,8 +13,6 @@ import {
   IonNote,
 } from '@ionic/react';
 
-import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import '../css/menu.css'
 import labels from '../data/labels'
@@ -54,7 +55,7 @@ const pages = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu = () => {
   const location = useLocation()
-  const { state, dispatch } = React.useContext(AuthContext)
+  const { state, dispatch } = useContext(AuthContext)
   let i = 0
   return (
     <IonMenu contentId="main" type="overlay">

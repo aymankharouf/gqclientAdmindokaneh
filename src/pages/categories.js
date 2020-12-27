@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import labels from '../data/labels'
 import { randomColors } from '../data/config'
 import { useQuery } from '@apollo/react-hooks'
@@ -7,8 +7,8 @@ import { IonContent, IonLoading, IonButton, IonHeader, IonToolbar, IonTitle, Ion
 
 const Categories = (props) => {
   const { loading, data } = useQuery(GET_CATEGORIES)
-  const [categories, setCategories] = React.useState([])
-  React.useEffect(() => {
+  const [categories, setCategories] = useState([])
+  useEffect(() => {
     setCategories(() => {
       const categories = data?.categories.filter(c => c.parentId === props.id)
       return categories?.sort((c1, c2) => c1.ordering - c2.ordering)  

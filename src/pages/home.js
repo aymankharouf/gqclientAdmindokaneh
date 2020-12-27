@@ -1,4 +1,3 @@
-import React from 'react'
 import MainCategories from './main-categories'
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
